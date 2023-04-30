@@ -34,6 +34,7 @@ class BarangController extends Controller
         $gambar = null;
         if ($request->hasFile('gambar_barang')) {
             $gambar = $request->file('gambar_barang')->store('public/gambar_barang');
+            $gambar = str_replace('public/', '', $gambar);
         }
 
         try {
@@ -82,6 +83,7 @@ class BarangController extends Controller
                 Storage::delete($gambar);
             }
             $gambar = $request->file('gambar_barang')->store('public/gambar_barang');
+            $gambar = str_replace('public/', '', $gambar);
         }
 
         $barang->update([
