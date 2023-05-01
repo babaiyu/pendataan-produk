@@ -4,82 +4,92 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $staffs = Staff::all();
+        return view("data-staff", ["staffs" => $staffs]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view("data-staff.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nama" => "required",
+            "jenis_kelamin" => "required",
+            "user" => "required|unique:staff",
+            "password" => "required|confirmed|min:8",
+        ]);
+
+        try {
+            $staff = new Staff();
+            $staff->nama = $request->nama;
+            $staff->jenis_kelamin = $request->jenis_kelamin;
+            $staff->user = $request->user;
+            $staff->password = Hash::make($request->password);
+            $staff->save();
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with(
+                    "error",
+                    "Terjadi kesalahan. Staff tidak berhasil ditambahkan. $e"
+                )
+                ->withInput();
+        }
+
+        return redirect("/data-staff")->with(
+            "success",
+            "Staff berhasil ditambahkan."
+        );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Staff  $staff
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Staff $staff)
+    public function edit($id)
     {
-        //
+        $staff = Staff::findOrFail($id);
+        return view("data-staff.edit", compact("staff"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Staff  $staff
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Staff $staff)
+    public function update(Request $request, $id)
     {
-        //
+        $staff = Staff::findOrFail($id);
+
+        $request->validate([
+            "nama" => "required",
+            "jenis_kelamin" => "required",
+            "user" => "required|unique:staff,user,".$id,
+            "password" => "nullable|confirmed|min:8",
+        ]);
+
+        $staff->nama = $request->nama;
+        $staff->jenis_kelamin = $request->jenis_kelamin;
+        $staff->user = $request->user;
+        if ($request->password) {
+            $staff->password = Hash::make($request->password);
+        }
+        $staff->save();
+
+        return redirect("/data-staff")->with(
+            "success",
+            "Data staff berhasil diperbarui."
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Staff  $staff
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Staff $staff)
+    public function destroy($id)
     {
-        //
-    }
+        $staff = Staff::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Staff  $staff
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Staff $staff)
-    {
-        //
+        $staff->delete();
+        return redirect("/data-staff")->with(
+            "success",
+            "Data staff berhasil dihapus."
+        );
     }
 }

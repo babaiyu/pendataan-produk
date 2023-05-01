@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PembeliController;
+use App\Http\Controllers\StaffController;
+
 
 Route::resource('barang', BarangController::class);
 Route::resource('pembeli', PembeliController::class);
+Route::resource('staff', StaffController::class);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('data-barang', BarangController::class);
 
     Route::resource('data-pembeli', PembeliController::class);
+
+    Route::resource('data-staff', StaffController::class);
 });
 
 require __DIR__.'/auth.php';
