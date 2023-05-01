@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\PembeliController;
 
 Route::resource('barang', BarangController::class);
-
+Route::resource('pembeli', PembeliController::class);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,16 +26,10 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::get('data-barang/{id}/edit', [BarangController::class, 'edit'])->name('data-barang.edit');
     Route::resource('data-barang', BarangController::class);
 
-
-
-    
-    // Route::match(['get', 'post'], '/data-barang/create', [BarangController::class, 'create'])->name('barang.create');
-
-
-
-
+    Route::resource('data-pembeli', PembeliController::class);
 });
 
 require __DIR__.'/auth.php';

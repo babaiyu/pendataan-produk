@@ -7,7 +7,7 @@
     </div>
 @endif
     <div class="container">
-        <a href="/data-barang/create" class="btn btn-primary mb-3">Tambah Barang</a>
+        <a href="/data-barang/create" class="btn btn-primary mb-3">Tambah Data Barang</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -32,7 +32,7 @@
                     <td>{{ $barang->harga_jual }}</td>
                     <td><img src="{{ asset('storage/' . $barang->gambar_barang) }}" width="100" alt="{{ $barang->nama_barang }}"></td>
                     <td>
-                        <a href="/barang/{{ $barang->id }}/edit" class="btn btn-warning">Edit</a>
+                        <a href="/data-barang/{{ $barang->id }}/edit" class="btn btn-warning">Edit</a>
                         <form action="/barang/{{ $barang->id }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
