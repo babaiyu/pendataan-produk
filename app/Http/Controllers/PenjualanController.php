@@ -90,6 +90,13 @@ class PenjualanController extends Controller
 
         // Mengembalikan stock barang ke jumlah semula
         $barang = Barang::find($penjualan->barang_id);
+        if ($barang->stock_barang < $request->jumlah_barang) {
+            return redirect()
+                ->back()
+                ->with("error", "Stock barang tidak mencukupi.")
+                ->withInput();
+        }
+    
         $barang->stock_barang += $penjualan->jumlah_barang;
         $barang->save();
 

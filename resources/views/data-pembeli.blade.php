@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-@if (session('success'))
+
+    <div class="container">
+    @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
-    <div class="container">
         <a href="/data-pembeli/create" class="btn btn-primary mb-3">Tambah Data Pembeli</a>
+        
         <table class="table table-bordered">
             <thead>
                 <tr>

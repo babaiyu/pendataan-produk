@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-@if (session('success'))
+
+    <div class="container">
+    @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
-    <div class="container">
         <a href="/data-barang/create" class="btn btn-primary mb-3">Tambah Data Barang</a>
+     
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -28,8 +30,8 @@
                     <td>{{ $barang->deskripsi }}</td>
                     <td>{{ $barang->jenis_barang }}</td>
                     <td>{{ $barang->stock_barang }}</td>
-                    <td>{{ $barang->harga_beli }}</td>
-                    <td>{{ $barang->harga_jual }}</td>
+                    <td>Rp {{ number_format($barang->harga_beli, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($barang->harga_jual, 0, ',', '.') }}</td>
                     <td><img src="{{ asset('storage/' . $barang->gambar_barang) }}" width="100" alt="{{ $barang->nama_barang }}"></td>
                     <td>
                         <a href="/data-barang/{{ $barang->id }}/edit" class="btn btn-warning">Edit</a>
