@@ -37,13 +37,16 @@
                     @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/data-barang') }}">Data Barang</a>
+                            <a class="nav-link" href="{{ url('/data-barang') }}">Barang</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/data-pembeli') }}">Data Pembeli</a>
+                            <a class="nav-link" href="{{ url('/data-pembeli') }}">Pembeli</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/data-staff') }}">Data Staff</a>
+                            <a class="nav-link" href="{{ url('/data-staff') }}">Staff</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/data-penjualan') }}">Penjualan</a>
                         </li>
                     </ul>
                     @endguest
