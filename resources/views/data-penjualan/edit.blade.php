@@ -35,7 +35,7 @@
 
         <div class="form-group">
             <label for="total_harga">Total Harga</label>
-            <input type="number" name="total_harga" id="total_harga" class="form-control" value="{{ $penjualan->total_harga }}" readonly>
+            <input type="number" name="total_harga" id="total_harga" class="form-control" value="{{ $penjualan->barang->harga_jual * $penjualan->jumlah_barang }}" readonly>
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan</button>

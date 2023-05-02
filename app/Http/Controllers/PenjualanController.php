@@ -83,15 +83,26 @@ class PenjualanController extends Controller
         $request->validate([
             'pembeli_id' => 'required',
             'barang_id' => 'required',
-            'jumlah_barang' => 'required'
+            "jumlah_barang" => "required|integer|min:1",
         ]);
 
         $penjualan = Penjualan::findOrFail($id);
+
+        // Mengembalikan stock barang ke jumlah semula
+        $barang = Barang::find($penjualan->barang_id);
+        $barang->stock_barang += $penjualan->jumlah_barang;
+        $barang->save();
+
         $penjualan->pembeli_id = $request->pembeli_id;
         $penjualan->barang_id = $request->barang_id;
         $penjualan->jumlah_barang = $request->jumlah_barang;
         $penjualan->total_harga = Barang::find($request->barang_id)->harga * $request->jumlah_barang;
         $penjualan->save();
+
+        // Mengurangi stock barang dengan jumlah barang baru
+        $barang = Barang::find($request->barang_id);
+        $barang->stock_barang -= $request->jumlah_barang;
+        $barang->save();
 
         return redirect()->route('data-penjualan.index')->with('success', 'Data penjualan berhasil diperbarui');
     }
